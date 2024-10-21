@@ -5,7 +5,7 @@ from .views import View
 class ClientUI:
     @classmethod
     def insert(cls):
-        st.title("Insert a Client")
+        st.title("Clients Register")
 
         with st.form("insert_client"):
             name = st.text_input(label="Name")
@@ -23,9 +23,6 @@ class ClientUI:
             else:
                 st.warning("All fields are required")
 
-            
-
-
     @classmethod
     def list_clients(cls):
         st.title("Listing Clients")
@@ -41,10 +38,29 @@ class ClientUI:
 
     @classmethod
     def update(cls):
-        st.title("Update a Client")
+        st.title("Clients Update")
 
         with st.form("update_client"):
-            st.form_submit_button("Update")
+            client_name = st.selectbox("Select Client", [c["name"] for c in View.list_clients()])
+            client_id = next((c for c in View.list_clients() if c["name"] == client_name), None)["id"]
+
+            new_name = st.text_input(label="New Name")
+            new_email = st.text_input(label="New Email")
+            new_phone = st.text_input(label="New Phone")
+            submit = st.form_submit_button("Update")
+            
+            if submit:
+                if new_name and new_email and new_phone:
+                    try:
+                        new_data = {"id": client_id, "name": new_name, "email": new_email, "phone": new_phone}
+
+                        View.update_client(client_id, new_data)
+                        
+                        st.success("Client updated successfully")
+                    except ValueError:
+                        st.error(f"Invalid Data")
+                else:
+                    st.warning("All fields are required")
 
     @classmethod
     def delete(cls):

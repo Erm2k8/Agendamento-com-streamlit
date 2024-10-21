@@ -117,25 +117,29 @@ class Clients(AbstractDAO):
         cls.clients.append(client)
         cls.save_data()
 
-    def update(self, client: Client):
-        self.load_data()
-        for index, c in enumerate(self.clients):
-            if c.get_id() == client.get_id():
-                self.clients[index] = client
-                break
-        self.save_data()
-
-    def delete(self, id: int):
-        self.load_data()
-        for index, c in enumerate(self.clients):
+    @classmethod
+    def update(cls, id: int, client: Dict):
+        cls.load_data()
+        for index, c in enumerate(cls.clients):
             if c.get_id() == id:
-                del self.clients[index]
+                cls.clients[index] = Client.from_dict(client)
                 break
-        self.save_data()
+        cls.save_data()
 
-    def get_by_id(self, id: int):
-        self.load_data()
-        for c in self.clients:
+    @classmethod
+    def delete(cls, id: int):
+        
+        cls.load_data()
+        for index, c in enumerate(cls.clients):
+            if c.get_id() == id:
+                del cls.clients[index]
+                break
+        cls.save_data()
+
+    @classmethod
+    def get_by_id(cls, id: int):
+        cls.load_data()
+        for c in cls.clients:
             if c.get_id() == id:
                 return c
         return None

@@ -13,9 +13,9 @@ class View:
         return Clients.insert(Client.from_dict(client))
     
     @staticmethod
-    def update_client(id):
+    def update_client(id, client: Dict):
         Clients.load_data()
-        return Clients.update(id)
+        return Clients.update(id, client)
     
     @staticmethod
     def delete_client(id: int):
