@@ -1,0 +1,10 @@
+[
+    {"id": 1, "name": "joao", "email": "example@email.com", "phone": "123456789"},
+    {"id": 2, "name": "maria", "email": "example@email.com", "phone": "123456789"},
+    {"id": 3, "name": "pedro", "email": "example@email.com", "phone": "123456789"},
+    {"id": 4, "name": "jose", "email": "example@email.com", "phone": "123456789"},
+    {"id": 5, "name": "ana", "email": "example@email.com", "phone": "123456789"},
+    {"id": 6, "name": "carlos", "email": "example@email.com", "phone": "123456789"},
+    {"id": 7, "name": "marcos", "email": "example@email.com", "phone": "123456789"},
+    {"id": 8, "name": "lucas", "email": "example@email.com", "phone": "123456789"}
+]

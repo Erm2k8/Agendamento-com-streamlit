@@ -5,7 +5,7 @@ class View:
     @staticmethod
     def list_clients():
         Clients.load_data()
-        return Clients.list_clients()
+        return [c.to_dict() for c in Clients.list()]
     
     @staticmethod
     def insert_client(client: Dict):

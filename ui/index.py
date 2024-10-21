@@ -2,7 +2,7 @@ import streamlit as st
 from .client_ui import ClientUI
 
 def index():
-    tab_insert, tab_list, tab_update, tab_delete = st.tabs(["Insert", "List", "Update", "Delete"])
+    tab_list, tab_insert, tab_update, tab_delete = st.tabs(["List", "Insert", "Update", "Delete"])
 
     with tab_insert:
         ClientUI.insert()

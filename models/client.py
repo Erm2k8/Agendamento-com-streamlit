@@ -1,6 +1,6 @@
 import re
-from abstract_dao import AbstractDAO
-from json_dao import JSONDAO as json_dao
+from .abstract_dao import AbstractDAO
+from .json_dao import JSONDAO as json_dao
 from typing import List, Dict
 
 class Client:
@@ -62,7 +62,7 @@ class Client:
         }
     
     @staticmethod
-    def from_dict(self, data: Dict):
+    def from_dict(data: Dict):
         return Client(
             data['id'],
             data['name'],
@@ -76,10 +76,10 @@ class Client:
 
 class Clients(AbstractDAO):
     clients: List[Client] = []
-    dao = json_dao("/data/clients.json")
+    dao = json_dao("./data/clients.json")
     
     if dao.load():
-        for client in dao.data:
+        for client in dao.load():
             clients.append(Client.from_dict(client))
 
     @classmethod
@@ -97,9 +97,10 @@ class Clients(AbstractDAO):
             data.append(client.to_dict())
         cls.dao.save(data)
 
-    def list(self):
-        self.load_data()
-        return self.clients
+    @classmethod
+    def list(cls):
+        cls.load_data()
+        return cls.clients
 
     @classmethod
     def insert(cls, client: Client):

@@ -5,7 +5,7 @@ class JSONDAO:
     def __init__(self, path: str) -> None:
         self.path = path
 
-    def load(self) -> List[Dict]:
+    def load(self):
         try:
             with open(self.path, 'r') as file:
                 return json.load(file)
