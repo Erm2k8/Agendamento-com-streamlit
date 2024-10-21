@@ -30,7 +30,7 @@ class Client:
         return self.__phone
     
     def set_id(self, id: int):
-        if isinstance(id, int) and id > 0:
+        if isinstance(id, int) and id >= 0:
             self.__id = id
         else:
             raise ValueError("Invalid id")
@@ -105,6 +105,15 @@ class Clients(AbstractDAO):
     @classmethod
     def insert(cls, client: Client):
         cls.load_data()
+
+        print(max([c['id'] for c in [c.to_dict() for c in cls.clients]]) + 1)
+
+        print(c.to_dict() for c in cls.clients)
+
+        next_id = max([c['id'] for c in (c.to_dict() for c in cls.clients)], default=0) + 1
+    
+        client.set_id(next_id)
+        
         cls.clients.append(client)
         cls.save_data()
 
