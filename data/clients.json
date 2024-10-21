@@ -1,11 +1,5 @@
 [
     {
-        "id": 1,
-        "name": "joao",
-        "email": "example@email.com",
-        "phone": "123456789"
-    },
-    {
         "id": 2,
         "name": "maria",
         "email": "example@email.com",
@@ -40,11 +34,5 @@
         "name": "marcos",
         "email": "example@email.com",
         "phone": "123456789"
-    },
-    {
-        "id": 8,
-        "name": "LUCAS",
-        "email": "lucas@email.com",
-        "phone": "324235"
     }
 ]

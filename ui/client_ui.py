@@ -55,7 +55,7 @@ class ClientUI:
                         new_data = {"id": client_id, "name": new_name, "email": new_email, "phone": new_phone}
 
                         View.update_client(client_id, new_data)
-                        
+
                         st.success("Client updated successfully")
                     except ValueError:
                         st.error(f"Invalid Data")
@@ -65,4 +65,13 @@ class ClientUI:
     @classmethod
     def delete(cls):
         st.title("Delete a Client")
+
+        with st.form("delete_client"):
+            client_name = st.selectbox("Select Client", [c["name"] for c in View.list_clients()])
+            client_id = next((c for c in View.list_clients() if c["name"] == client_name), None)["id"]
+            submit = st.form_submit_button("Delete")
+
+            if submit:
+                View.delete_client(client_id)
+                st.success("Client deleted successfully")
         
