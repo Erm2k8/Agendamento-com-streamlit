@@ -29,15 +29,13 @@ class ClientUI:
     @classmethod
     def list_clients(cls):
         st.title("Listing Clients")
-
-        clients_list = View.list_clients()
-        
+        clients_list = View.list_clients()  
         dataframe = pd.DataFrame(clients_list)
-
         st.dataframe(
             data=dataframe,
             hide_index=True,
-            use_container_width=True)
+            use_container_width=True
+        )
 
     @classmethod
     def update(cls):
