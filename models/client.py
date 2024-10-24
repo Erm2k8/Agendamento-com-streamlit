@@ -106,10 +106,6 @@ class Clients(AbstractDAO):
     def insert(cls, client: Client):
         cls.load_data()
 
-        print(max([c['id'] for c in [c.to_dict() for c in cls.clients]]) + 1)
-
-        print(c.to_dict() for c in cls.clients)
-
         next_id = max([c['id'] for c in (c.to_dict() for c in cls.clients)], default=0) + 1
     
         client.set_id(next_id)
