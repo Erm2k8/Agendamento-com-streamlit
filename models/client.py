@@ -143,4 +143,3 @@ class Clients(AbstractDAO):
             if c.get_id() == id:
                 return c
         return None
-    
