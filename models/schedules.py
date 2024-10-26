@@ -87,48 +87,49 @@ class Schedule:
     
 
 class Schedules(AbstractDAO):
-    def __init__(self):
-        super().__init__()
-        self.schedules = []
+    schedules: List[Schedule] = []
+    dao = json_dao("./data/schedules.json")
 
-    def load_data(self):
-        self.schedules = []
-        data = self.dao.load()
+    @classmethod
+    def load_data(cls):
+        cls.schedules = []
+        data = cls.dao.load()
         if data:
             for schedule in data:
-                self.schedules.append(Schedule.from_dict(schedule))
+                cls.schedules.append(Schedule.from_dict(schedule))
 
-    def save_data(self):
-        data = []
-        for schedule in self.schedules:
-            data.append(schedule.to_dict())
-        self.dao.save(data)
+    @classmethod
+    def save_data(cls):
+        data = [schedule.to_dict() for schedule in cls.schedules]
+        cls.dao.save(data)
 
-    def create(self, data):
+    @classmethod
+    def create(cls, data):
         schedule = Schedule.from_dict(data)
-        self.schedules.append(schedule)
-        self.save_data()
+        cls.schedules.append(schedule)
+        cls.save_data()
 
-    def update(self, id, data):
+    @classmethod
+    def update(cls, id, data):
         schedule = Schedule.from_dict(data)
-        for i in range(len(self.schedules)):
-            if self.schedules[i].get_id() == id:
-                self.schedules[i] = schedule
-                self.save_data()
+        for i, existing_schedule in enumerate(cls.schedules):
+            if existing_schedule.get_id() == id:
+                cls.schedules[i] = schedule
+                cls.save_data()
                 break
 
-    def delete(self, id):
-        for i in range(len(self.schedules)):
-            if self.schedules[i].get_id() == id:
-                del self.schedules[i]
-                self.save_data()
+    @classmethod
+    def delete(cls, id):
+        for i, existing_schedule in enumerate(cls.schedules):
+            if existing_schedule.get_id() == id:
+                del cls.schedules[i]
+                cls.save_data()
                 break
 
-    def get_by_id(self, id: int):
-        for schedule in self.schedules:
-            if schedule.get_id() == id:
-                return schedule
-        return None
+    @classmethod
+    def get_by_id(cls, id: int):
+        return next((schedule for schedule in cls.schedules if schedule.get_id() == id), None)
 
-    def list(self):
-        return self.schedules
+    @classmethod
+    def list(cls):
+        return cls.schedules

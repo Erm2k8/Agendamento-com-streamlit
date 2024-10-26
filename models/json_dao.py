@@ -9,7 +9,7 @@ class JSONDAO:
         try:
             with open(self.path, 'r') as file:
                 return json.load(file)
-        except FileNotFoundError:
+        except (json.JSONDecodeError, FileNotFoundError):
             return []
         
     def save(self, data: List[Dict]):

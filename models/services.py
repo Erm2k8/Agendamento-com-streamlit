@@ -62,10 +62,10 @@ class Service:
     @staticmethod
     def from_dict(data: Dict):
         return Service(
-            id = data['id'],
-            description = data['description'],
-            price = data['price'],
-            duration = data['duration']
+            id=data.get('id', 0),
+            description=data.get('description', ''),
+            price=data.get('price', 0.0),
+            duration=data.get('duration', 0)
         )
 
     def __str__(self) -> str:
@@ -89,9 +89,7 @@ class Services(AbstractDAO):
 
     @classmethod
     def save_data(cls):
-        data = []
-        for service in cls.services:
-            data.append(service.to_dict())
+        data = [service.to_dict() for service in cls.services]
         cls.dao.save(data)
 
     @classmethod
@@ -102,9 +100,7 @@ class Services(AbstractDAO):
     @classmethod
     def insert(cls, service: Service):
         cls.load_data()
-
-        next_id = max([s['id'] for s in (s.to_dict() for s in cls.services)], default=0) + 1
-    
+        next_id = max((s.get_id() for s in cls.services), default=0) + 1
         service.set_id(next_id)
         
         cls.services.append(service)
@@ -121,12 +117,9 @@ class Services(AbstractDAO):
 
     @classmethod
     def delete(cls, id: int):
-        cls.load_data()    
-        for index, s in enumerate(cls.services):
-            if s.get_id() == id:
-                del cls.services[index]
-                cls.save_data() 
-                break
+        cls.load_data()
+        cls.services = [s for s in cls.services if s.get_id() != id]
+        cls.save_data()
 
     @classmethod
     def get_by_id(cls, id: int):
