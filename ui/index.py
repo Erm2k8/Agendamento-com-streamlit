@@ -36,11 +36,12 @@ class Index:
         with tab_delete:
             ServicesUI.delete()
 
-        ServicesUI.hello_world()
-
     @classmethod
     def schedules(cls):
-        tab_list, tab_insert, tab_update, tab_delete = st.tabs(["List", "Insert", "Update", "Delete"])
+        tab_to_open, tab_list, tab_insert, tab_update, tab_delete = st.tabs(["Open","List", "Insert", "Update", "Delete"])
+
+        with tab_to_open:
+            SchedulesUI.open_schedules()
 
         with tab_insert:
             SchedulesUI.insert()
@@ -53,6 +54,4 @@ class Index:
 
         with tab_delete:
             SchedulesUI.delete()
-            
-        SchedulesUI.hello_world()
 

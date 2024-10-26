@@ -1,20 +1,11 @@
 [
     {
         "id": 1,
-        "description": "Mec\u00e2nico",
-        "price": 300.0,
-        "duration": 150
-    },
-    {
-        "id": 2,
-        "description": "Desenho digital",
+        "description": "Desenho Digital",
         "price": 100.0,
-        "duration": 60
-    },
-    {
-        "id": 3,
-        "description": "Aula de Refor\u00e7o",
-        "price": 400.0,
-        "duration": 210
+        "duration": 120,
+        "start_time": "09:30:00",
+        "end_time": "17:30:00",
+        "interval": 30
     }
 ]
