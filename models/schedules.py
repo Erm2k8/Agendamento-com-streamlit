@@ -5,18 +5,12 @@ from typing import List, Dict
 from datetime import datetime as dt
 
 class Schedule:
-    def __init__(self, id: int, client_id: int, service_id: int, data: dt, confirmed: bool):
-        self.__id = 0
-        self.__client_id = 0
-        self.__service_id = 0
-        self.__data = dt.now()
-        self.__confirmed = False
-
-        self.set_id(id)
-        self.set_client_id(client_id)
-        self.set_service_id(service_id)
-        self.set_data(data)
-        self.set_confirmed(confirmed)
+    def __init__(self, id: int, client_id: int, service_id: int, date: dt, confirmed: bool):
+        self.__id = id
+        self.__client_id = client_id
+        self.__service_id = service_id
+        self.__date = date
+        self.__confirmed = confirmed
 
     def get_id(self) -> int:
         return self.__id
@@ -27,8 +21,8 @@ class Schedule:
     def get_service_id(self) -> int:
         return self.__service_id
 
-    def get_data(self) -> dt:
-        return self.__data
+    def get_date(self) -> dt:
+        return self.__date
 
     def get_confirmed(self) -> bool:
         return self.__confirmed
@@ -51,11 +45,11 @@ class Schedule:
         else:
             raise ValueError("Invalid service_id")
         
-    def set_data(self, data: dt):
-        if isinstance(data, dt):
-            self.__data = data
+    def set_date(self, date: dt):
+        if isinstance(date, dt):
+            self.__date = date
         else:
-            raise ValueError("Invalid data")
+            raise ValueError("Invalid date")
 
     def set_confirmed(self, confirmed: bool):
         if isinstance(confirmed, bool):
@@ -68,7 +62,7 @@ class Schedule:
             "id": self.__id,
             "client_id": self.__client_id,
             "service_id": self.__service_id,
-            "data": self.__data,
+            "date": self.__date.isoformat(),
             "confirmed": self.__confirmed
         }
 
@@ -78,12 +72,12 @@ class Schedule:
             data["id"],
             data["client_id"],
             data["service_id"],
-            data["data"],
+            dt.fromisoformat(data["date"]),
             data["confirmed"]
         )
     
     def __str__(self) -> str:
-        return f"Schedule(id={self.__id}, client_id={self.__client_id}, service_id={self.__service_id}, data={self.__data}, confirmed={self.__confirmed})"
+        return f"Schedule(id={self.__id}, client_id={self.__client_id}, service_id={self.__service_id}, date={self.__date}, confirmed={self.__confirmed})"
     
 
 class Schedules(AbstractDAO):
@@ -104,13 +98,17 @@ class Schedules(AbstractDAO):
         cls.dao.save(data)
 
     @classmethod
-    def create(cls, data):
+    def create(cls, data: Dict):
         schedule = Schedule.from_dict(data)
+
+        next_id = max([s['id'] for s in (s.to_dict() for s in cls.schedules)], default=0) + 1
+        schedule.set_id(next_id)
+
         cls.schedules.append(schedule)
         cls.save_data()
 
     @classmethod
-    def update(cls, id, data):
+    def update(cls, id: int, data: Dict):
         schedule = Schedule.from_dict(data)
         for i, existing_schedule in enumerate(cls.schedules):
             if existing_schedule.get_id() == id:
@@ -119,7 +117,7 @@ class Schedules(AbstractDAO):
                 break
 
     @classmethod
-    def delete(cls, id):
+    def delete(cls, id: int):
         for i, existing_schedule in enumerate(cls.schedules):
             if existing_schedule.get_id() == id:
                 del cls.schedules[i]
@@ -127,9 +125,9 @@ class Schedules(AbstractDAO):
                 break
 
     @classmethod
-    def get_by_id(cls, id: int):
+    def get_by_id(cls, id: int) -> Schedule:
         return next((schedule for schedule in cls.schedules if schedule.get_id() == id), None)
 
     @classmethod
-    def list(cls):
+    def list(cls) -> List[Schedule]:
         return cls.schedules

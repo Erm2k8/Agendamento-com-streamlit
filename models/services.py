@@ -133,6 +133,7 @@ class Services(AbstractDAO):
     @classmethod
     def insert(cls, service: Service):
         cls.load_data()
+        
         next_id = max((s.get_id() for s in cls.services), default=0) + 1
         service.set_id(next_id)
         

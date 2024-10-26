@@ -1,7 +1,7 @@
 from models.client import Client, Clients
 from models.schedules import Schedule, Schedules
 from models.services import Service, Services
-from datetime import time, datetime
+from datetime import time, datetime, timedelta
 from typing import Dict
 
 class View:
@@ -46,7 +46,7 @@ class View:
         return Schedules.delete(id)
     
     @staticmethod
-    def open_schedules(date: time, start_hour: time, end_hour: time, confirmed: bool, id_client: int, id_service: int):
+    def open_schedules(date: datetime, start_hour: time, end_hour: time, confirmed: bool, id_client: int, id_service: int):
         def generate_time_slots(start_hour, end_hour, interval_minutes):
             time_slots = []
             start_time = datetime.combine(date, start_hour)
@@ -54,7 +54,7 @@ class View:
             
             while start_time <= end_time:
                 time_slots.append(start_time.time())
-                start_time += datetime.timedelta(minutes=interval_minutes)
+                start_time += timedelta(minutes=interval_minutes)
             
             return time_slots
 

@@ -7,5 +7,23 @@
         "start_time": "09:30:00",
         "end_time": "17:30:00",
         "interval": 30
+    },
+    {
+        "id": 2,
+        "description": "Servi\u00e7o",
+        "price": 50.0,
+        "duration": 40,
+        "start_time": "09:30:00",
+        "end_time": "17:30:00",
+        "interval": 30
+    },
+    {
+        "id": 3,
+        "description": "Servi\u00e7o 2",
+        "price": 8000.0,
+        "duration": 40,
+        "start_time": "07:45:00",
+        "end_time": "12:45:00",
+        "interval": 15
     }
 ]

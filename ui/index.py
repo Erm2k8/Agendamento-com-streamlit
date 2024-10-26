@@ -38,10 +38,7 @@ class Index:
 
     @classmethod
     def schedules(cls):
-        tab_to_open, tab_list, tab_insert, tab_update, tab_delete = st.tabs(["Open","List", "Insert", "Update", "Delete"])
-
-        with tab_to_open:
-            SchedulesUI.open_schedules()
+        tab_list, tab_insert, tab_update, tab_delete = st.tabs(["List", "Insert", "Update", "Delete"])
 
         with tab_insert:
             SchedulesUI.insert()
