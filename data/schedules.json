@@ -1,9 +1,16 @@
 [
     {
         "id": 1,
-        "client_id": 7,
-        "service_id": 2,
+        "client_id": 1,
+        "service_id": 1,
         "date": "2024-10-26T00:00:00",
+        "confirmed": false
+    },
+    {
+        "id": 2,
+        "client_id": 3,
+        "service_id": 3,
+        "date": "2024-10-29T00:00:00",
         "confirmed": true
     }
 ]

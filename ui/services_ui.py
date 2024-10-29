@@ -27,7 +27,7 @@ class ServicesUI:
         with st.form("insert_service", clear_on_submit=True):
             description = st.text_input(label="Description")
             price = st.number_input(label="Price", min_value=0.0, step=0.01, format="%.2f")
-            duration = st.number_input(label="Duration (minutes)", min_value=1, step=1)
+            duration = st.number_input(label="Duration (minutes)", min_value=1, step=1, value=30)
             start_time = st.time_input("Start Time", value=time(9, 30))
             end_time = st.time_input("End Time", value=time(17, 30))
             interval = st.number_input("Interval between services (minutes)", min_value=1, step=1, value=30)

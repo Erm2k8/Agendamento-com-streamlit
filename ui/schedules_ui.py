@@ -70,69 +70,94 @@ class SchedulesUI:
     def update(cls):
         st.title("Update Schedule")
         schedules = View.list_schedules()
-        if schedules:
-            with st.form("update_schedule", clear_on_submit=True):
-                schedule_id = st.selectbox("Select Schedule", [s["id"] for s in schedules])
-                selected_schedule = next((s for s in schedules if s["id"] == schedule_id), None)
-                services = View.list_services()
-                clients = View.list_clients()
+        services = View.list_services()
+        clients = View.list_clients()
 
-                if selected_schedule:
-                    service_description = selected_schedule.get("service", "")
-                    client_name = selected_schedule.get("client", "")
-                    
-                    new_service = st.selectbox("New Service", 
-                                                [s["description"] for s in services], 
-                                                index=([s["description"] for s in services].index(service_description) 
-                                                        if service_description in [s["description"] for s in services] 
-                                                        else 0))
-                    new_client = st.selectbox("New Client", 
-                                            [c["name"] for c in clients], 
-                                            index=([c["name"] for c in clients].index(client_name) 
-                                                    if client_name in [c["name"] for c in clients] 
-                                                    else 0))
-
-                    new_date_str = selected_schedule.get("date")
-                    if new_date_str:
-                        new_date_str = new_date_str.split('T')[0]
-                        new_date = datetime.strptime(new_date_str, "%Y-%m-%d").date()
-                    else:
-                        new_date = datetime.now().date()
-
-                    new_date = st.date_input("New Date", value=new_date)
-                    
-                    new_time = cls.convert_to_time(selected_schedule.get("time", "00:00"))
-                    new_time = st.time_input("New Time", value=new_time)
-
-                    confirmed = st.checkbox("Confirmed", value=selected_schedule.get("confirmed", False))
-
-                    submit = st.form_submit_button("Update")
-                    if submit:
-                        if new_service and new_client and new_date and new_time:
-                            try:
-                                service_data = next((s for s in services if s["description"] == new_service), None)
-                                client_data = next((c for c in clients if c["name"] == new_client), None)
-
-                                if service_data and client_data:
-                                    View.update_schedule(schedule_id, {
-                                        "id": selected_schedule.get("id"),
-                                        "service_id": service_data["id"],
-                                        "client_id": client_data["id"],
-                                        "date": new_date.isoformat(),
-                                        "time": new_time.strftime("%H:%M:%S"),
-                                        "confirmed": confirmed
-                                    })
-                                    st.success("Schedule updated successfully.")
-                                    sleep(2)
-                                    st.rerun()
-                                else:
-                                    st.error("Service or Client not found.")
-                            except ValueError:
-                                st.error("Invalid data.")
-                        else:
-                            st.warning("All fields are required.")
-        else:
+        if not schedules:
             st.warning("No schedules available to update.")
+            return
+
+        with st.form("update_schedule", clear_on_submit=True):
+            schedule_id = st.selectbox("Select Schedule", [s["id"] for s in schedules])
+            selected_schedule = next((s for s in schedules if s["id"] == schedule_id), None)
+
+            if selected_schedule:
+                service_description = selected_schedule.get("service", "")
+                client_name = selected_schedule.get("client", "")
+
+                new_service = st.selectbox(
+                    "New Service",
+                    [s["description"] for s in services],
+                    index=([s["description"] for s in services].index(service_description)
+                            if service_description in [s["description"] for s in services]
+                            else 0)
+                )
+                new_client = st.selectbox(
+                    "New Client",
+                    [c["name"] for c in clients],
+                    index=([c["name"] for c in clients].index(client_name)
+                            if client_name in [c["name"] for c in clients]
+                            else 0)
+                )
+
+                new_date_str = selected_schedule.get("date")
+
+                if new_date_str:
+                    new_date_str = new_date_str.split('T')[0]
+                    new_date = datetime.strptime(new_date_str, "%Y-%m-%d").date()
+                else:
+                    new_date = datetime.now().date()
+
+                new_date = st.date_input("New Date", value=new_date)
+
+                service_data = next((s for s in services if s["description"] == new_service), None)
+
+                if service_data:
+                    start_time = cls.convert_to_time(service_data["start_time"])
+                    end_time = cls.convert_to_time(service_data["end_time"])
+                    duration = service_data["duration"]
+                    interval = service_data["interval"]
+                    print("AAAAAAAAAAAAAAAAAAAAAAAAA")
+                    print(new_service)
+                    print(start_time)
+                    print(end_time)
+                    print(duration)
+                    print(interval)
+                    available_times = cls.get_available_times(start_time, end_time, duration, interval)
+                    print(available_times)
+                else:
+                    available_times = []
+
+                new_time = st.selectbox("Schedule Time", available_times)
+
+                confirmed = st.checkbox("Confirmed", value=selected_schedule.get("confirmed", False))
+
+                submit = st.form_submit_button("Update")
+
+            if submit:
+                if new_service and new_client and new_date and new_time:
+                    try:
+                        service_data = next((s for s in services if s["description"] == new_service), None)
+                        client_data = next((c for c in clients if c["name"] == new_client), None)
+
+                        if service_data and client_data:
+                            View.update_schedule(schedule_id, {
+                                "id": selected_schedule.get("id"),
+                                "service_id": service_data["id"],
+                                "client_id": client_data["id"],
+                                "date": new_date.isoformat(),
+                                "time": new_time.strftime("%H:%M:%S"),
+                                "confirmed": confirmed
+                            })
+                            st.success("Schedule updated successfully.")
+                            sleep(2)
+                            st.rerun()
+                        else:
+                            st.error("Service or Client not found.")
+                    except ValueError:
+                        st.error("Invalid data.")
+                else:
+                    st.warning("All fields are required.")
 
     @classmethod
     def delete(cls):
