@@ -44,19 +44,6 @@ class View:
     def delete_schedule(id: int):
         Schedules.load_data()
         return Schedules.delete(id)
-    
-    @staticmethod
-    def open_schedules(date: datetime, start_hour: time, end_hour: time, confirmed: bool, id_client: int, id_service: int):
-        def generate_time_slots(start_hour, end_hour, interval_minutes):
-            time_slots = []
-            start_time = datetime.combine(date, start_hour)
-            end_time = datetime.combine(date, end_hour)
-            
-            while start_time <= end_time:
-                time_slots.append(start_time.time())
-                start_time += timedelta(minutes=interval_minutes)
-            
-            return time_slots
 
     @staticmethod
     def list_services():

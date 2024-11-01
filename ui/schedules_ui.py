@@ -117,14 +117,14 @@ class SchedulesUI:
                     end_time = cls.convert_to_time(service_data["end_time"])
                     duration = service_data["duration"]
                     interval = service_data["interval"]
-                    print("AAAAAAAAAAAAAAAAAAAAAAAAA")
-                    print(new_service)
-                    print(start_time)
-                    print(end_time)
-                    print(duration)
-                    print(interval)
-                    available_times = cls.get_available_times(start_time, end_time, duration, interval)
-                    print(available_times)
+                    # print("AAAAAAAAAAAAAAAAAAAAAAAAA")
+                    # print(new_service)
+                    # print(start_time)
+                    # print(end_time)
+                    # print(duration)
+                    # print(interval)
+                    # available_times = cls.get_available_times(start_time, end_time, duration, interval)
+                    # print(available_times)
                 else:
                     available_times = []
 

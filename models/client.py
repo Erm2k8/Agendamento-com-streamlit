@@ -1,21 +1,24 @@
 import re
 from .abstract_dao import AbstractDAO
 from .json_dao import JSONDAO as json_dao
+from hashlib import sha256 as makehash
 from typing import List, Dict
 
 class Client:
     email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
-    def __init__(self, id: int, name: str, email: str, phone: str):
+    def __init__(self, id: int, name: str, email: str, phone: str, password: str):
         self.__id = 0
         self.__name = ""
         self.__email = ""
         self.__phone = ""
+        self.__password = ""
 
         self.set_id(id)
         self.set_name(name)
         self.set_email(email)
         self.set_phone(phone)
+        self.set_password(password)
 
     def get_id(self) -> int:
         return self.__id
@@ -28,13 +31,13 @@ class Client:
 
     def get_phone(self) -> str:
         return self.__phone
-    
+
     def set_id(self, id: int):
         if isinstance(id, int) and id >= 0:
             self.__id = id
         else:
             raise ValueError("Invalid id")
-    
+
     def set_name(self, name: str):
         if isinstance(name, str) and len(name) > 0 and name.replace(" ", "").isalpha():
             self.__name = name
@@ -52,13 +55,19 @@ class Client:
             self.__phone = phone
         else:
             raise ValueError("Invalid phone")
+
+    def set_password(self, password: str):
+        if isinstance(password, str):
+            hashed_password = makehash(password.encode()).hexdigest()
+            self.__password = password
         
     def to_dict(self):
         return {
             'id': self.__id,
             'name': self.__name,
             'email': self.__email,
-            'phone': self.__phone
+            'phone': self.__phone,
+            'password': self.__password
         }
     
     @staticmethod
@@ -67,7 +76,8 @@ class Client:
             data['id'],
             data['name'],
             data['email'],
-            data['phone']
+            data['phone'],
+            data['password']
         )
         
     def __str__(self) -> str:

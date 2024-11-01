@@ -1,3 +1,5 @@
+from pydoc import classname
+from tkinter.ttk import Style
 import streamlit as st
 import pandas as pd
 from .views import View
@@ -12,12 +14,13 @@ class ClientUI:
             name = st.text_input(label="Name")
             email = st.text_input(label="Email")
             phone = st.text_input(label="Phone")
+            password = st.text_input(label="Password")
             submit = st.form_submit_button("Insert")
 
             if name and email and phone:
                 if submit:
                     try:                        
-                        View.insert_client({"id": 0,"name": name, "email": email, "phone": phone})
+                        View.insert_client({"id": 0,"name": name, "email": email, "phone": phone, "password": password})
                         st.success("Client Inserted")
                         sleep(2)
                         st.rerun()
@@ -66,3 +69,14 @@ class ClientUI:
     def delete(cls):
         st.title("Delete a Client")
         
+        with st.form("delete_client"):
+            client_name = st.selectbox("Select a Client", [c["name"] for c in View.list_clients()])
+            client_id = next((c for c in View.list_clients() if c["name"] == client_name), None)["id"]
+
+            submit = st.form_submit_button("Delete Client")
+
+            if submit:
+                View.delete_client(client_id)
+                st.success("Client deleted")
+                sleep(2)
+                st.rerun()

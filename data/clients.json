@@ -1,86 +1,86 @@
 [
     {
-        "id": 1,
-        "name": "joao",
-        "email": "example@email.com",
-        "phone": "123456789"
-    },
-    {
         "id": 2,
         "name": "maria",
         "email": "example@email.com",
-        "phone": "123456789"
-    },
-    {
-        "id": 3,
-        "name": "pedro",
-        "email": "example@email.com",
-        "phone": "123456789"
+        "phone": "123456789",
+        "password": "b7e94be513e96e8c45cd23d162275e5a12ebde9100a425c4ebcdd7fa4dcd897c"
     },
     {
         "id": 4,
         "name": "jose",
         "email": "example@email.com",
-        "phone": "123456789"
+        "phone": "123456789",
+        "password": "b7e94be513e96e8c45cd23d162275e5a12ebde9100a425c4ebcdd7fa4dcd897c"
     },
     {
         "id": 5,
         "name": "ana",
         "email": "example@email.com",
-        "phone": "123456789"
+        "phone": "123456789",
+        "password": "b7e94be513e96e8c45cd23d162275e5a12ebde9100a425c4ebcdd7fa4dcd897c"
     },
     {
         "id": 6,
         "name": "carlos",
         "email": "example@email.com",
-        "phone": "123456789"
+        "phone": "123456789",
+        "password": "b7e94be513e96e8c45cd23d162275e5a12ebde9100a425c4ebcdd7fa4dcd897c"
     },
     {
         "id": 7,
         "name": "marcos",
         "email": "example@email.com",
-        "phone": "123456789"
+        "phone": "123456789",
+        "password": "b7e94be513e96e8c45cd23d162275e5a12ebde9100a425c4ebcdd7fa4dcd897c"
     },
     {
         "id": 8,
         "name": "Ana Alice",
         "email": "alicezinhadograu@email.com",
-        "phone": "3535353"
+        "phone": "3535353",
+        "password": "b7e94be513e96e8c45cd23d162275e5a12ebde9100a425c4ebcdd7fa4dcd897c"
     },
     {
         "id": 9,
         "name": "Igor Batista",
         "email": "iguinho@email.com",
-        "phone": "666"
+        "phone": "666",
+        "password": "b7e94be513e96e8c45cd23d162275e5a12ebde9100a425c4ebcdd7fa4dcd897c"
     },
     {
         "id": 10,
         "name": "Gilbert",
         "email": "gilbert@email.com",
-        "phone": "1975"
+        "phone": "1975",
+        "password": "b7e94be513e96e8c45cd23d162275e5a12ebde9100a425c4ebcdd7fa4dcd897c"
     },
     {
         "id": 11,
         "name": "Jeca Camundongo",
         "email": "jeca@email.com",
-        "phone": "37583"
+        "phone": "37583",
+        "password": "b7e94be513e96e8c45cd23d162275e5a12ebde9100a425c4ebcdd7fa4dcd897c"
     },
     {
         "id": 12,
         "name": "Hector",
         "email": "heitorzao@email.com",
-        "phone": "34234"
+        "phone": "34234",
+        "password": "b7e94be513e96e8c45cd23d162275e5a12ebde9100a425c4ebcdd7fa4dcd897c"
     },
     {
         "id": 13,
         "name": "Belarmino",
         "email": "bela@email.com",
-        "phone": "324234"
+        "phone": "324234",
+        "password": "b7e94be513e96e8c45cd23d162275e5a12ebde9100a425c4ebcdd7fa4dcd897c"
     },
     {
         "id": 14,
         "name": "Arthur ",
         "email": "pinheiro@gmail.com",
-        "phone": "6924"
+        "phone": "6924",
+        "password": "b7e94be513e96e8c45cd23d162275e5a12ebde9100a425c4ebcdd7fa4dcd897c"
     }
 ]
